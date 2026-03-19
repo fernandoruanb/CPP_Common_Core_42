@@ -13,7 +13,10 @@
 #include "HumanB.hpp"
 
 HumanB::HumanB(std::string name)
-	: weapon(NULL), name(name) {}
+	: weapon(NULL), name(name) 
+{
+	this->name = name;
+}
 
 HumanB::~HumanB(void) {}
 
@@ -27,7 +30,7 @@ void	HumanB::attack(void) const
 	if (!weapon)
 	{
 		std::cout << std::endl;
-		std::cout << "🧔HumanB doesn't have a 🔨weapon to attack!" << std::endl;
+		std::cout << "🧔" << name << " doesn't have a 🔨weapon to attack!" << std::endl;
 		return ;
 	}
 	std::cout << std::endl;

@@ -32,6 +32,10 @@ int	main(void)
 		jim.attack();
 		club.setType("some other type of club");
 		jim.attack();
+		club.setType("Mihawk's greatest sword");
+		jim.attack();
+		jim.setWeapon(NULL);
+		jim.attack();
 		std::cout << std::endl;
 	}
 	return (0);
