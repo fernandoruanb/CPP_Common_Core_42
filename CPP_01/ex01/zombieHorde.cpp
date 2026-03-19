@@ -21,11 +21,11 @@ Zombie*	Zombie::zombieHorde(int N, std::string name)
 
 	if (N <= 0)
 		return (NULL);
-	MyZombieHorde = new Zombie[N];
+	MyZombieHorde = new Zombie[N]; // Yes, it is so simple to make a horde of zombies
 	index = 0;
 	while (index < N)
 	{
-		std::ostringstream oss;
+		std::ostringstream oss; // concatenate strings plus numbers at the same time
 		oss << name << "_" << index;
 		MyZombieHorde[index].set_name(oss.str());
 		MyZombieHorde[index].announce();

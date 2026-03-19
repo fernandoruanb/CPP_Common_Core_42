@@ -20,7 +20,7 @@ void	Zombie::set_name(std::string name)
 void	Zombie::announce(void)
 {
 	std::cout << std::endl;
-	std::cout << "🧟" << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << BLUE << "🧟" << name << GOLD << ": BraiiiiiiinnnzzzZ..." << RESET << std::endl;
 }
 
 Zombie::Zombie(void) {}
@@ -33,5 +33,5 @@ Zombie::Zombie(std::string name)
 Zombie::~Zombie(void)
 {
 	std::cout << std::endl;
-	std::cout << "🧟The zombie " << name << " was killed successfully👮⚔️ 🧟";
+	std::cout << "🧟The zombie " << BLUE << name << RESET << " was killed successfully👮⚔️ 🧟";
 }
