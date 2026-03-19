@@ -25,5 +25,5 @@ Zombie::Zombie(std::string name)
 void	Zombie::announce(void)
 {
 	std::cout << std::endl;
-	std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << TURQUOISE << name << GOLD << ": BraiiiiiiinnnzzzZ..." << RESET << std::endl;
 }

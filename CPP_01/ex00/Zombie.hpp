@@ -15,6 +15,15 @@
 
 # include <iostream>
 
+# define GOLD "\033[93m"
+# define TURQUOISE "\033[96m"
+# define METAL_BLUE "\033[38;5;111m"
+# define PURPLE "\033[1;95m"
+# define BLUE "\033[34m"
+# define RED "\033[1;91m"
+# define GREEN "\033[1;92m"
+# define RESET "\033[0m"
+
 class Zombie
 {
 	private:
@@ -22,8 +31,8 @@ class Zombie
 	public:
 		Zombie(std::string name);
 		~Zombie(void);
-		static Zombie*	newZombie(std::string name);
-		static void	randomChump(std::string name);
+		Zombie*	newZombie(std::string name);
+		void	randomChump(std::string name);
 		void	announce(void);
 };
 
