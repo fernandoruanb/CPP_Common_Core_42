@@ -12,7 +12,8 @@
 
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
-
+#include <cstdlib>
+#include <climits>
 
 static int	ft_atoi(std::string command)
 {
@@ -35,6 +36,8 @@ static int	ft_atoi(std::string command)
 	while (command[index] >= '0' && command[index] <= '9')
 	{
 		result *= 10;
+		if (result > INT_MAX || (result * signal) < INT_MIN)
+			return (-1);
 		result += command[index] - '0';
 		index++;
 	}
@@ -69,18 +72,29 @@ int	main(void)
 	while (1)
 	{
 		std::cout << std::endl;
-		std::cout << std::setfill('-') << std::setw(55) << "-" << std::endl;
-		std::cout << "| 1.ADD -> add a new contact =D" << std::endl;
-		std::cout << "| 2.SEARCH -> search a contact or show all contacts :)" << std::endl;
-		std::cout << "| 3.EXIT -> exit the PhoneBook program D=" << std::endl;
-		std::cout << "| TOTAL_CONTACTS(" << MyPhoneBook.get_total() << "/8)" << " ;)" << std::endl;
-		std::cout << std::setfill('-') << std::setw(55) << "-" << std::endl << std::endl;
-		std::cout << "<<phonebook>>$ ";
-		if (!std::getline(std::cin, command) || command.empty())
+		std::cout << "╔══════════════════════════════════════════════════════╗" << std::endl;
+		std::cout << "║                  COMMANDS OPTIONS                    ║" << std::endl;
+		std::cout << "╠══════════════════════════════════════════════════════╣" << std::endl;
+		std::cout << "║  1. ADD    -> add a new contact =D                   ║" << std::endl;
+		std::cout << "║  2. SEARCH -> search a contact or show all :)        ║" << std::endl;
+		std::cout << "║  3. EXIT   -> exit the PhoneBook program D=          ║" << std::endl;
+		std::cout << "║  TOTAL_CONTACTS(" << MyPhoneBook.get_total() << "/8) ;)                              ║" << std::endl;
+		std::cout << "║          PhoneBookv1.0 by " << GOLD << "Fernando Ruan" << RESET << "     	       ║" << std::endl;
+		std::cout << "╚══════════════════════════════════════════════════════╝" << std::endl << std::endl;
+		std::cout << METAL_BLUE << "<<PhoneBook>>$ " << RESET;
+		if (!std::getline(std::cin, command))
 		{
 			std::cin.clear();
 			clearerr(stdin);
+			std::cout << std::endl;
+			std::cout << GREEN << "Thanks for use our PhoneBook =D. Bye!" << RESET << std::endl;
+			exit(0);
 		}
+		if (command.empty()) {
+			std::cin.clear();
+			clearerr(stdin);
+		}
+
 		if (command == "ADD")
 			MyPhoneBook.add_new_contact();
 		else if (command == "SEARCH")
@@ -96,12 +110,12 @@ int	main(void)
 				if (check_index(cmd))
 				{
 					index = ft_atoi(cmd) - 1;
-					MyPhoneBook.show_specif_contact(index);
+					MyPhoneBook.show_inLine_contact(index);
 				}
 				else
 				{
 					std::cout << std::endl;
-					std::cerr << "The index needs to be a number, please!";
+					std::cerr << RED << "The index needs to be a number, please!" << RESET;
 				}
 			}
 			else if (cmd == "NO" || cmd == "no")
@@ -112,7 +126,7 @@ int	main(void)
 		if (command != "ADD" && command != "EXIT" && command != "SEARCH")
 		{
 			std::cerr << std::endl;
-			std::cerr << "Invalid input. You need to choose a valid command!!!";
+			std::cerr << RED << "Invalid input. You need to choose a valid command!!!" << RESET;
 		}
 		std::cout << std::endl;
 		std::cin.clear();

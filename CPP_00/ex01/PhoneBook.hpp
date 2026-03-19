@@ -18,6 +18,15 @@
 # include <cstdio>
 # include <iomanip>
 
+# define GOLD "\033[93m"
+# define TURQUOISE "\033[96m"
+# define METAL_BLUE "\033[38;5;111m"
+# define PURPLE "\033[1;95m"
+# define BLUE "\033[34m"
+# define RED "\033[1;91m"
+# define GREEN "\033[1;92m"
+# define RESET "\033[0m"
+
 class PhoneBook
 {
 	private:
@@ -30,8 +39,10 @@ class PhoneBook
 		PhoneBook(void);
 		void	add_new_contact(void);
 		void	show_specif_contact(int index) const;
+		void	show_inLine_contact(int index) const;
 		void	show_all_contacts(void) const;
 		int	get_total(void) const;
+		std::string format_str_to_inline(std::string temp) const;
 };
 
 #endif /* PHONEBOOK_HPP */

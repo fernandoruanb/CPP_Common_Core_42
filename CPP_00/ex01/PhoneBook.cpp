@@ -12,7 +12,7 @@
 
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook()
+PhoneBook::PhoneBook(void)
 {
 	index = 0;
 	total = 0;
@@ -25,7 +25,10 @@ bool	PhoneBook::show_add_error(const std::string message, std::string temp) cons
 	if (temp.empty())
         {
 		std::cout << std::endl << std::endl;
-                std::cerr << "You need to fill the camp ";
+		std::cout << RED << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+		std::cout << RED << "║           Fill the camp, please !            ║" << RESET << std::endl;
+		std::cout << RED << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 		std::cout << message;
 		std::cin.clear();
 		clearerr(stdin);
@@ -37,7 +40,10 @@ bool	PhoneBook::show_add_error(const std::string message, std::string temp) cons
 		if (temp[index] < 32 || temp[index] > 126)
 		{
 			std::cout << std::endl;
-			std::cerr << "ONLY ASCII CHARACTERS!!!";
+			std::cout << RED << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+			std::cout << RED << "║             Only ASCII Chars !!!             ║" << RESET << std::endl;
+			std::cout << RED << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 			return (1);
 		}
 		index++;
@@ -52,14 +58,20 @@ bool	PhoneBook::show_add_error(const std::string message, std::string temp) cons
 			else
 			{
 				std::cout << std::endl;
-				std::cerr << "ONLY NUMBERS!!!";
+		 		std::cout << RED << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+				std::cout << RED << "║            Only Numbers Please !!            ║" << RESET << std::endl;
+				std::cout << RED << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 				return (1);
 			}
 		}
 		if (temp.length() > 16)
 		{
 			std::cout << std::endl;
-			std::cerr << "16 DIGITS IS THE INTERNATIONAL LIMIT PATTERN!!!";
+			std::cout << RED << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+			std::cout << RED << "║          16 digits limit reached!            ║" << RESET << std::endl;
+			std::cout << RED << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 			return (1);
 		}
 	}
@@ -70,17 +82,28 @@ bool	PhoneBook::show_add_error(const std::string message, std::string temp) cons
 			return (0);
 		index++;
 	}
+
 	std::cout << std::endl;
-	std::cerr << "ONLY SPACES IS FORBIDDEN!!!";
+	std::cout << RED << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+        std::cout << RED << "║         Only spaces is forbidden !!          ║" << RESET << std::endl;
+        std::cout << RED << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 	return (1);
 }
 
 void	PhoneBook::correct_str(std::string &temp) const
 {
-	if (temp.length() > 10)
+	if (temp.length() > 9)
 		temp = temp.substr(0,9) + '.';
 	else
 		temp = std::string(10 - temp.length(), ' ') + temp;
+}
+
+std::string PhoneBook::format_str_to_inline(std::string temp) const
+{
+	temp.erase(0, temp.find_first_not_of(" \t\n\r\f\v"));
+    	temp.erase(temp.find_last_not_of(" \t\n\r\f\v") + 1);
+	return (temp);
 }
 
 void	PhoneBook::add_new_contact(void)
@@ -117,7 +140,9 @@ void	PhoneBook::add_new_contact(void)
 	std::getline(std::cin, temp);
 	if (show_add_error("PHONE NUMBER", temp))
                 return ;
-	correct_str(temp);
+	//correct_str(temp);
+	temp.erase(0, temp.find_first_not_of(" \t\n\r\f\v"));
+	temp.erase(temp.find_last_not_of(" \t\n\r\f\v") + 1);
 	new_contact.set_phone_number(temp);
 	std::cout << std::endl;
 
@@ -125,7 +150,9 @@ void	PhoneBook::add_new_contact(void)
 	std::getline(std::cin, temp);
 	if (show_add_error("DARKEST SECRET", temp))
                 return ;
-	correct_str(temp);
+	//correct_str(temp);
+	temp.erase(0, temp.find_first_not_of(" \t\n\r\f\v"));
+	temp.erase(temp.find_last_not_of(" \t\n\r\f\v") + 1);
 	new_contact.set_darkest_secret(temp);
 
 	phonebook[index % 8] = new_contact;
@@ -133,9 +160,10 @@ void	PhoneBook::add_new_contact(void)
 	if (total < 8)
 		total++;
 	std::cout << std::endl;
-	std::cout << std::setfill('-') << std::setw(46) << "-" << std::endl;
-	std::cout << "| Success! New contact added to Phonebook =D |" << std::endl;
-	std::cout << std::setfill('-') << std::setw(46) << "-";
+	std::cout << GREEN << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+        std::cout << GREEN << "║            Success adding (+1) =D            ║" << RESET << std::endl;
+        std::cout << GREEN << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+
 }
 
 void	PhoneBook::show_all_contacts(void) const
@@ -155,24 +183,58 @@ int	PhoneBook::get_total(void) const
 	return (total);
 }
 
+void	PhoneBook::show_inLine_contact(int index) const
+{
+	if (index >= total)
+        {
+                std::cout << std::endl;
+                std::cerr << RED << "The index surpass the total of contacts" << RESET;
+                return ;
+        }
+        if (total == 0)
+        {
+                std::cout << std::endl;
+                std::cerr << RED << "Doesn't exist a contact" << RESET;
+                return ;
+        }
+	if (index < 0 || index > 7)
+	{
+		std::cout << std::endl;
+		std::cerr << RED << "Invalid index. Only from 1 to 8, please!" << RESET;
+		return ;
+	}
+
+	std::cout << std::endl;
+	std::cout << GOLD << "╔══════════════════════════════════════════════╗" << RESET << std::endl;
+	std::cout << GOLD << "║            That is the contact =D            ║" << RESET << std::endl;
+	std::cout << GOLD << "╠══════════════════════════════════════════════╣" << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Index: " << TURQUOISE << index + 1 << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Firstname: " << TURQUOISE << format_str_to_inline(phonebook[index].get_first_name()) << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Lastname: " << TURQUOISE << format_str_to_inline(phonebook[index].get_last_name()) << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Nickname: " << TURQUOISE << format_str_to_inline(phonebook[index].get_nickname()) << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Phone Number: " << TURQUOISE << phonebook[index].get_phone_number() << RESET << std::endl;
+	std::cout << GOLD << "║ " << "Darkest Secret: " << TURQUOISE << phonebook[index].get_darkest_secret() << RESET << std::endl;
+	std::cout << GOLD << "╚══════════════════════════════════════════════╝" << RESET << std::endl;
+}
+
 void	PhoneBook::show_specif_contact(int index) const
 {
 	if (index < 0 || index > 7)
 	{
 		std::cout << std::endl;
-		std::cerr << "Invalid index. Only from 1 to 8, please!";
+		std::cerr << RED << "Invalid index. Only from 1 to 8, please!" << RESET;
 		return ;
 	}
 	if (index >= total)
 	{
 		std::cout << std::endl;
-		std::cerr << "The index surpass the total of contacts";
+		std::cerr << RED << "The index surpass the total of contacts" << RESET;
 		return ;
 	}
 	if (total == 0)
 	{
 		std::cout << std::endl;
-		std::cerr << "Doesn't exist a contact";
+		std::cerr << RED << "Doesn't exist a contact" << RESET;
 		return ;
 	}
 	std::cout << std::endl;

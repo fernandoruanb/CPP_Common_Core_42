@@ -23,8 +23,6 @@ class Contact
 		std::string	_nickname;
 		std::string	_phone_number;
 		std::string	_darkest_secret;
-		std::string	get_darkest_secret(void) const;
-		std::string	get_phone_number(void) const;
 	public:
 		Contact(void);
 		void	set_first_name(const std::string &name);
@@ -35,6 +33,8 @@ class Contact
 		std::string	get_first_name(void) const;
 		std::string	get_last_name(void) const;
 		std::string	get_nickname(void) const;
+		std::string	get_darkest_secret(void) const; // In that exercise, only the attribute is protected
+		std::string	get_phone_number(void) const;
 };
 
 #endif /* CONTACT_HPP */
