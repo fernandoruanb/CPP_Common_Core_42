@@ -22,12 +22,14 @@ class Fixed
 		int	number;
 		static const int	bits = 8;
 	public:
-		Fixed();
-		~Fixed();
+		Fixed(void);
+		~Fixed(void);
 		Fixed(const int n);
 		Fixed(const float num);
 		Fixed(const Fixed &other);
 		Fixed &operator=(const Fixed &another);
+		int     getRawBits(void) const;
+		void    setRawBits(int const raw);
 		float	toFloat(void) const;
 		int	toInt(void) const;
 };

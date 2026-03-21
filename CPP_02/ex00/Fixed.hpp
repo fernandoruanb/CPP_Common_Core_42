@@ -22,8 +22,8 @@ class Fixed
 		int	number;
 		static const int	bits = 8;
 	public:	
-		Fixed();
-		~Fixed();
+		Fixed(void);
+		~Fixed(void);
 		Fixed(const Fixed &other);
 		Fixed &operator=(const Fixed &num);
 		int	getRawBits(void) const;

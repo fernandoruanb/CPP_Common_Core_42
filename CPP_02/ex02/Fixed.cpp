@@ -12,14 +12,25 @@
 
 #include "Fixed.hpp"
 
-Fixed::Fixed() : number(0)
+int     Fixed::getRawBits(void) const
+{
+        std::cout << "getRawBits member function called" << std::endl;
+        return (this->number);
+}
+
+void    Fixed::setRawBits(int const raw)
+{
+        this->number = raw;
+}
+
+Fixed::Fixed(void) : number(0)
 {
 	std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed	Fixed::operator/(const Fixed &second) const
 {
-	if (second.toInt() == 0)
+	if (second.number == 0)
 	{
 		std::cout << "Division by Zero Error" << std::endl;
 		return (0);
@@ -38,6 +49,20 @@ Fixed	Fixed::operator++(int)
 Fixed	&Fixed::operator++(void)
 {
 	number++;
+	return (*this);
+}
+
+Fixed Fixed::operator--(int)
+{
+	Fixed result(*this);
+
+	--(*this);
+	return (result);
+}
+
+Fixed &Fixed::operator--(void)
+{
+	number--;
 	return (*this);
 }
 
@@ -86,39 +111,35 @@ Fixed	Fixed::operator+(const Fixed &second) const
 	return (this->toFloat() + second.toFloat());
 }
 
-float	Fixed::max(Fixed &first, Fixed &second)
+Fixed&	Fixed::max(Fixed &first, Fixed &second)
 {
-	if (first.toFloat() > second.toFloat())
-		return (first.toFloat());
-	else
-		return (second.toFloat());
+	if (first > second)
+		return (first);
+	return (second);
 }
 
-float	Fixed::min(Fixed &first, Fixed &second)
+Fixed&	Fixed::min(Fixed &first, Fixed &second)
 {
-	if (first.toFloat() < second.toFloat())
-		return (first.toFloat());
-	else
-		return (second.toFloat());
+	if (first < second)
+		return (first);
+	return (second);
 }
 
-float	Fixed::max(const Fixed &first, const Fixed &second)
+const Fixed&	Fixed::max(const Fixed &first, const Fixed &second)
 {
-	if (first.toFloat() > second.toFloat())
-		return (first.toFloat());
-	else
-		return (second.toFloat());
+	if (first > second)
+		return (first);
+	return (second);
 }
 
-float	Fixed::min(const Fixed &first, const Fixed &second)
+const Fixed&	Fixed::min(const Fixed &first, const Fixed &second)
 {
-	if (first.toFloat() < second.toFloat())
-		return (first.toFloat());
-	else
-		return (second.toFloat());
+	if (first < second)
+		return (first);
+	return (second);
 }
 
-Fixed::~Fixed()
+Fixed::~Fixed(void)
 {
 	std::cout << "Destructor called" << std::endl;
 }
@@ -154,9 +175,7 @@ Fixed::Fixed(const Fixed &another)
 Fixed& Fixed::operator=(const Fixed& other)
 {
 	if (this != &other)
-	{
-		this->number = other.number;
-	}
+		this->number = other.getRawBits();
 	return (*this);
 }
 

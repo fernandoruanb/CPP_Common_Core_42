@@ -22,8 +22,8 @@ class Fixed
 		int	number;
 		static const int	bits = 8;
 	public:
-		Fixed();
-		~Fixed();
+		Fixed(void);
+		~Fixed(void);
 		Fixed(const int n);
 		Fixed(const float num);
 		Fixed(const Fixed &another);
@@ -40,10 +40,14 @@ class Fixed
 		bool	operator==(const Fixed &second) const;
 		Fixed&	operator++(void);
 		Fixed	operator++(int);
-		static float	max(const Fixed &first, const Fixed &second);
-		static float	max(Fixed &first, Fixed &second);
-		static float	min(const Fixed &first, const Fixed &second);
-		static float	min(Fixed &first, Fixed &second);
+		Fixed&	operator--(void);
+		Fixed	operator--(int);
+		const static Fixed&	max(const Fixed &first, const Fixed &second);
+		static Fixed&	max(Fixed &first, Fixed &second);
+		const static Fixed&	min(const Fixed &first, const Fixed &second);
+		static Fixed&	min(Fixed &first, Fixed &second);
+		int     getRawBits(void) const;
+                void    setRawBits(int const raw);
 		int	toInt(void) const;
 		float	toFloat(void) const;
 };
